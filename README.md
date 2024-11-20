@@ -1,16 +1,8 @@
-# chess
+# Multiplayer Chess Using Bluetooth in Flutter
 
-A new Flutter project.
+This project is a Flutter-based mobile application for playing chess between two players using Bluetooth connectivity. The app enables seamless peer-to-peer communication, allowing players to host or join games without the need for an internet connection. The core features include a visually intuitive chessboard, turn-based gameplay, move validation, and handling of game disruptions like disconnections or reconnections.
 
-## Getting Started
+Bluetooth integration is achieved using the `flutter_blue_plus` package, while the `chess` Dart package manages chess rules, move validation, and game state logic. Players can synchronize their moves in real-time, ensuring a smooth gaming experience. Additional features like timed games, player statistics, and leaderboards can be implemented to enhance the app’s functionality.
 
-This project is a starting point for a Flutter application.
+With a focus on user experience, the app provides a clean interface, clear game flow, and error handling for common issues. The project is designed with modularity in mind, ensuring scalability and ease of maintenance. It is an excellent starting point for developers interested in building Bluetooth-based multiplayer games.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
