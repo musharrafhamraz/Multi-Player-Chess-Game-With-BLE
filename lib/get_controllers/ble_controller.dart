@@ -105,119 +105,17 @@
 // }
 
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:get/get.dart';
 
-class BLEController {
-  // final FlutterBluePlus _flutterBlue = FlutterBluePlus.instance;
+class BLEController extends GetxController {
+  Future<void> scanDevices() async {
+    print("Starting Scan.....");
+    await FlutterBluePlus.startScan(timeout: const Duration(seconds: 15));
+    print("No Device Found...");
 
-  // Stream for scanning devices
-  Stream<List<ScanResult>> get scanResults => FlutterBluePlus.scanResults;
-
-  // Stream for checking the Bluetooth adapter state
-  Stream<BluetoothAdapterState> get adapterState =>
-      FlutterBluePlus.adapterState;
-
-  // Start scanning for BLE devices
-  Future<void> startScan(
-      {Duration timeout = const Duration(seconds: 10)}) async {
-    try {
-      // Ensure Bluetooth is enabled before scanning
-      final state = await FlutterBluePlus.adapterState.first;
-      if (state != BluetoothAdapterState.on) {
-        throw Exception('Bluetooth is not enabled. Please enable Bluetooth.');
-      }
-
-      // Start scanning
-      await FlutterBluePlus.startScan(timeout: timeout);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // Stop scanning for BLE devices
-  Future<void> stopScan() async {
-    try {
-      await FlutterBluePlus.stopScan();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // Connect to a BLE device
-  Future<BluetoothDevice> connectToDevice(ScanResult scanResult) async {
-    final device = scanResult.device;
-    try {
-      // Listen to connection state changes
-      device.connectionState.listen((state) {
-        if (state == BluetoothConnectionState.connected) {
-          print('Device connected: ${device.name}');
-        } else if (state == BluetoothConnectionState.disconnected) {
-          print('Device disconnected: ${device.name}');
-        }
-      });
-
-      // Connect to the device
-      await device.connect();
-      return device;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // Disconnect from a BLE device
-  Future<void> disconnectFromDevice(BluetoothDevice device) async {
-    try {
-      await device.disconnect();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // Discover services and characteristics
-  Future<List<BluetoothService>> discoverServices(
-      BluetoothDevice device) async {
-    try {
-      return await device.discoverServices();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // Read a characteristic's value
-  Future<List<int>> readCharacteristic(
-      BluetoothCharacteristic characteristic) async {
-    try {
-      return await characteristic.read();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // Write a value to a characteristic
-  Future<void> writeCharacteristic(
-    BluetoothCharacteristic characteristic,
-    List<int> value, {
-    bool withoutResponse = false,
-  }) async {
-    try {
-      await characteristic.write(value, withoutResponse: withoutResponse);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // Subscribe to a characteristic
-  Stream<List<int>> subscribeToCharacteristic(
-      BluetoothCharacteristic characteristic) {
-    try {
-      characteristic.setNotifyValue(true);
-      return characteristic.onValueReceived;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // Dispose resources
-  void dispose() {
     FlutterBluePlus.stopScan();
+    print("Scan Stop.....");
   }
+
+  Stream<List<ScanResult>> get scanResult => FlutterBluePlus.scanResults;
 }
